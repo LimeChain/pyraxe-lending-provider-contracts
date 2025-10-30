@@ -26,7 +26,7 @@ import '@nomiclabs/hardhat-etherscan';
 
 import 'hardhat-gas-reporter';
 import 'hardhat-typechain';
-import '@tenderly/hardhat-tenderly';
+// import '@tenderly/hardhat-tenderly';
 import 'solidity-coverage';
 import { fork } from 'child_process';
 
@@ -74,12 +74,37 @@ let forkMode;
 
 const buidlerConfig: HardhatUserConfig = {
   solidity: {
-    version: '0.6.12',
-    settings: {
-      optimizer: { enabled: true, runs: 200 },
-      evmVersion: 'istanbul',
-    },
+    compilers: [
+      {
+        version: '0.6.12',
+        settings: {
+          optimizer: { enabled: true, runs: 200 },
+          evmVersion: 'istanbul',
+        },
+      },
+      {
+        version: '0.8.0',
+        settings: {
+          optimizer: { enabled: true, runs: 200 },
+          evmVersion: 'istanbul',
+        },
+      },
+      {
+        version: '0.8.20',
+        settings: {
+          optimizer: { enabled: true, runs: 200 },
+          evmVersion: 'istanbul',
+        },
+      },
+    ],
   },
+  // solidity: {
+  //   version: '0.6.12',
+  //   settings: {
+  //     optimizer: { enabled: true, runs: 200 },
+  //     evmVersion: 'istanbul',
+  //   },
+  // },
   typechain: {
     outDir: 'types',
     target: 'ethers-v5',
@@ -108,6 +133,7 @@ const buidlerConfig: HardhatUserConfig = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
+    sepolia: getCommonNetworkConfig(eEthereumNetwork.sepolia, 11155111),
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
     ropsten: getCommonNetworkConfig(eEthereumNetwork.ropsten, 3),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),

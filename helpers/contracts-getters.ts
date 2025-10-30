@@ -205,6 +205,8 @@ export const getPairsTokenAggregator = (
   aggregatorsAddresses: { [tokenSymbol: string]: tEthereumAddress },
   oracleQuoteCurrency: string
 ): [string[], string[]] => {
+  console.log('allAssetsAddresses', allAssetsAddresses);
+  console.log('aggregatorsAddresses', aggregatorsAddresses);
   const assetsWithoutQuoteCurrency = omit(
     allAssetsAddresses,
     getQuoteCurrencies(oracleQuoteCurrency)
@@ -212,6 +214,9 @@ export const getPairsTokenAggregator = (
 
   const pairs = Object.entries(assetsWithoutQuoteCurrency).reduce<[string, string][]>(
     (acc, [tokenSymbol, tokenAddress]) => {
+      console.log('tokenSymbol', tokenSymbol);
+      console.log('tokenAddress', tokenAddress);
+      console.log('aggregatorsAddresses', aggregatorsAddresses);
       const aggregatorAddressIndex = Object.keys(aggregatorsAddresses).findIndex(
         (value) => value === tokenSymbol
       );
@@ -229,6 +234,9 @@ export const getPairsTokenAggregator = (
   const mappedPairs = pairs.map(([asset]) => asset);
   const mappedAggregators = pairs.map(([, source]) => source);
 
+  console.log('mappedPairs', mappedPairs);
+  console.log('mappedAggregators', mappedAggregators);
+  console.log('pairs', pairs);
   return [mappedPairs, mappedAggregators];
 };
 

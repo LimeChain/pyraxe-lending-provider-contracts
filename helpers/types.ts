@@ -7,6 +7,7 @@ export interface SymbolMap<T> {
 export type eNetwork = eEthereumNetwork | ePolygonNetwork | eXDaiNetwork | eAvalancheNetwork;
 
 export enum eEthereumNetwork {
+  sepolia = 'sepolia',
   buidlerevm = 'buidlerevm',
   kovan = 'kovan',
   ropsten = 'ropsten',
@@ -104,6 +105,8 @@ export enum eContractid {
   ParaSwapLiquiditySwapAdapter = 'ParaSwapLiquiditySwapAdapter',
   UiIncentiveDataProviderV2V3 = 'UiIncentiveDataProviderV2V3',
   UiIncentiveDataProviderV2 = 'UiIncentiveDataProviderV2',
+  PythOracle = 'PythOracle',
+  FeeCollector = 'FeeCollector',
 }
 
 /*
@@ -427,6 +430,7 @@ export interface iParamsPerNetworkAll<T>
     iXDaiParamsPerNetwork<T> {}
 
 export interface iEthereumParamsPerNetwork<T> {
+  [eEthereumNetwork.sepolia]: T;
   [eEthereumNetwork.coverage]: T;
   [eEthereumNetwork.buidlerevm]: T;
   [eEthereumNetwork.kovan]: T;
@@ -528,6 +532,23 @@ export interface IBaseConfiguration {
   ReserveAssets: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
   OracleQuoteCurrency: string;
   OracleQuoteUnit: string;
+  PythOracle: IPythOracleParams;
+  FeeCollector: IFeeCollectorParams;
+}
+
+export interface IPythOracleParams {
+  [network: string]: {
+    pythAddress: tEthereumAddress;
+    initialStaleTime: number;
+  };
+}
+
+export interface IFeeCollectorParams {
+  [network: string]: {
+    admin: tEthereumAddress;
+    guardian: tEthereumAddress;
+    withdrawer: tEthereumAddress;
+  };
 }
 
 export interface ICommonConfiguration extends IBaseConfiguration {

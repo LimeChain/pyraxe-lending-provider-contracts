@@ -18,6 +18,7 @@ import {
   getPairsTokenAggregator,
 } from '../../helpers/contracts-getters';
 import { AaveOracle, LendingRateOracle } from '../../types';
+import { getPythOracle } from '../helpers/contracts-deployments';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -25,6 +26,16 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .setAction(async ({ verify, pool }, DRE) => {
     try {
       await DRE.run('set-DRE');
+
+      console.log('\n[Pyraxe] Deploying custom Pyth Fallback Oracle...');
+
+      const fallbackOracleAddress: string = await DRE.run('deploy-pyraxe-pyth-oracle', {
+        verify,
+        pool,
+      });
+
+      console.log('[Pyraxe] Custom Pyth Fallback Oracle deployed at:', fallbackOracleAddress);
+
       const network = <eNetwork>DRE.network.name;
       const poolConfig = loadPoolConfig(pool);
       const {
@@ -33,14 +44,29 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         FallbackOracle,
         ChainlinkAggregator,
       } = poolConfig as ICommonConfiguration;
+
+      console.log(`\n--- Debugging Config for Network: ${network} ---`);
+      console.log('Raw poolConfig.ReserveAssets:');
+      console.log(JSON.stringify(ReserveAssets, null, 2));
+      console.log('\nRaw poolConfig.ChainlinkAggregator:');
+      console.log(JSON.stringify(ChainlinkAggregator, null, 2));
+      console.log('--- End Debugging --- \n');
+
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
       const aaveOracleAddress = getParamPerNetwork(poolConfig.AaveOracle, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
-      const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
+      // const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
       const chainlinkAggregators = await getParamPerNetwork(ChainlinkAggregator, network);
+
+      console.log(`\n--- Debugging after getParamPerNetwork ---`);
+      console.log('Value of reserveAssets variable:');
+      console.log(JSON.stringify(reserveAssets, null, 2));
+      console.log('\nValue of chainlinkAggregators variable:');
+      console.log(JSON.stringify(chainlinkAggregators, null, 2));
+      console.log('--- End Debugging --- \n');
 
       const tokensToWatch: SymbolMap<string> = {
         ...reserveAssets,

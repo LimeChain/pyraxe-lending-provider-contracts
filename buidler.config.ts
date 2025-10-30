@@ -1,11 +1,11 @@
 import path from 'path';
 import fs from 'fs';
-import {usePlugin, task} from '@nomiclabs/buidler/config';
+import { usePlugin, task } from '@nomiclabs/buidler/config';
 // @ts-ignore
-import {accounts} from './test-wallets.js';
-import {eEthereumNetwork} from './helpers/types';
-import {BUIDLEREVM_CHAINID, COVERAGE_CHAINID} from './helpers/buidler-constants';
-import {setDRE} from './helpers/misc-utils';
+import { accounts } from './test-wallets.js';
+import { eEthereumNetwork } from './helpers/types';
+import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
+import { setDRE } from './helpers/misc-utils';
 
 require('dotenv').config();
 
@@ -50,7 +50,7 @@ const getCommonNetworkConfig = (networkName: eEthereumNetwork, networkId: number
 const buidlerConfig: any = {
   solc: {
     version: '0.6.12',
-    optimizer: {enabled: true, runs: 200},
+    optimizer: { enabled: true, runs: 200 },
     evmVersion: 'istanbul',
   },
   typechain: {
@@ -80,7 +80,7 @@ const buidlerConfig: any = {
       chainId: BUIDLEREVM_CHAINID,
       throwOnTransactionFailures: true,
       throwOnCallFailures: true,
-      accounts: accounts.map(({secretKey, balance}: {secretKey: string; balance: string}) => ({
+      accounts: accounts.map(({ secretKey, balance }: { secretKey: string; balance: string }) => ({
         privateKey: secretKey,
         balance,
       })),

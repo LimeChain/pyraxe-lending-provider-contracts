@@ -40,14 +40,21 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         console.log('\tDeploying new lending pool implementation & libraries...');
         const lendingPoolImpl = await deployLendingPool(verify);
         lendingPoolImplAddress = lendingPoolImpl.address;
-        await lendingPoolImpl.initialize(addressesProvider.address);
+        // await lendingPoolImpl.initialize(addressesProvider.address);
       }
       console.log('\tSetting lending pool implementation with address:', lendingPoolImplAddress);
       // Set lending pool impl to Address provider
-      await waitForTx(await addressesProvider.setLendingPoolImpl(lendingPoolImplAddress));
+      await waitForTx(
+        await addressesProvider.setLendingPoolImpl(lendingPoolImplAddress as string, {
+          gasLimit: 10000000,
+        })
+      );
 
       const address = await addressesProvider.getLendingPool();
       const lendingPoolProxy = await getLendingPool(address);
+
+      console.log('Lending pool proxy address:', address);
+      console.log('Lending pool proxy implementation address:', lendingPoolImplAddress);
 
       await insertContractAddressInDb(eContractid.LendingPool, lendingPoolProxy.address);
 
@@ -64,7 +71,9 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
       );
       // Set lending pool conf impl to Address Provider
       await waitForTx(
-        await addressesProvider.setLendingPoolConfiguratorImpl(lendingPoolConfiguratorImplAddress)
+        await addressesProvider.setLendingPoolConfiguratorImpl(
+          lendingPoolConfiguratorImplAddress as string
+        )
       );
 
       const lendingPoolConfiguratorProxy = await getLendingPoolConfiguratorProxy(
@@ -96,6 +105,7 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
         }/fork/${DRE.tenderly.network().getFork()}/simulation/${DRE.tenderly.network().getHead()}`;
         console.error('Check tx error:', transactionLink);
       }
+      console.error('Error!!!!!:', error);
       throw error;
     }
   });

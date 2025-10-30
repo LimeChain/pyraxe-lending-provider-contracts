@@ -17,6 +17,7 @@ import {
   getLendingPoolAddressesProvider,
 } from '../../helpers/contracts-getters';
 import { chainlinkAggregatorProxy, chainlinkEthUsdAggregatorProxy } from '../../helpers/constants';
+import { getFeeCollector } from '../helpers/contracts-deployments';
 
 task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
   .addFlag('verify', 'Verify contracts at Etherscan')
@@ -24,6 +25,15 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
   .setAction(async ({ verify, pool }, localBRE) => {
     try {
       await localBRE.run('set-DRE');
+
+      console.log('\n[Pyraxe] Deploying custom Fee Collector...');
+      const treasuryAddress: string = await localBRE.run('deploy-pyraxe-feecollector', {
+        verify,
+        pool,
+      });
+      // const treasuryAddress = (await getFeeCollector()).address;
+      console.log('[Pyraxe] Custom Fee Collector deployed at:', treasuryAddress);
+
       const network = <eNetwork>localBRE.network.name;
       const poolConfig = loadPoolConfig(pool);
       const {
@@ -51,7 +61,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         throw 'Reserve assets is undefined. Check ReserveAssets configuration at config directory';
       }
 
-      const treasuryAddress = await getTreasuryAddress(poolConfig);
+      // const treasuryAddress = await getTreasuryAddress(poolConfig);
 
       await initReservesByHelper(
         ReservesConfig,
