@@ -257,4 +257,3 @@ After borrowing:
 - `withdraw-from-pool-configurable.ts` - Withdraw collateral (after repaying)
 - `check-balance.ts` - Monitor your position
 ```
-

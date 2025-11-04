@@ -1130,5 +1130,3 @@ After withdrawing:
 ```
 
 ---
-
-These four README files provide comprehensive documentation for each script, covering configuration, usage, examples, errors, strategies, and best practices! 🎉

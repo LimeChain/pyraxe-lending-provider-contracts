@@ -366,5 +366,3 @@ Sepolia testing uses your configured private key:
 2. **Create** `README-SEPOLIA-TESTING.md` in your project root
 3. Copy and paste the complete markdown text above into each respective file
 4. Reference them as needed during your testing workflow
-
-Both files are complete, self-contained guides that include all the information about using your diagnostic scripts! 🚀
