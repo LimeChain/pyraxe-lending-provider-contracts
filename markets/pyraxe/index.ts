@@ -153,10 +153,10 @@ export const PyraxeConfig: IAaveConfiguration = {
       xSUSHI: '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272',
     },
     [eEthereumNetwork.sepolia]: {
-      WBTC: '0x29f2D40B0605204364af54EC677bD022dA425d03', // address for wbtc on sepolia (Marto file for addresses)
-      WETH: '0xC558DBdd856501FCd9aaF1E62eae57A9F0629a3c', // address on weth on sepolia testnet (Marto file for addresses)
-      USDT: '0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0', // address for usdt on sepolia (Marto file for addresses)
-      LINK: '0xf8Fb3713D459D7C1018BD0A49D19b4C44290EBE5', // address for link on sepolia (Marto file for addresses)
+      WBTC: '0x29f2D40B0605204364af54EC677bD022dA425d03',
+      WETH: '0xC558DBdd856501FCd9aaF1E62eae57A9F0629a3c',
+      USDT: '0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0',
+      LINK: '0xf8Fb3713D459D7C1018BD0A49D19b4C44290EBE5',
     },
   },
 };
