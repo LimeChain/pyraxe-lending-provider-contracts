@@ -379,6 +379,7 @@ export const CommonsConfig: ICommonConfiguration = {
       WBTC: '0x5fb1616F78dA7aFC9FF79e0371741a747D2a7F22',
       USDT: '0xf652fc718F86b3470e55aeF99Ff8F9013ecB87fD',
       LINK: '0x42585eD362B3f1BCa95c640FdFf35Ef899212734',
+      USD: '0x694AA1769357215DE4FAC081bf1f309aDC325306',
     },
   },
   ReserveAssets: {
