@@ -377,7 +377,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eEthereumNetwork.goerli]: {},
     [eEthereumNetwork.sepolia]: {
       WBTC: '0x5fb1616F78dA7aFC9FF79e0371741a747D2a7F22',
-      USDT: '0xf652fc718F86b3470e55aeF99Ff8F9013ecB87fD',
+      USDT: '0xAcE12f16101487E0861e87BdcFA5Cb588489FB66',
       LINK: '0x42585eD362B3f1BCa95c640FdFf35Ef899212734',
       USD: '0x694AA1769357215DE4FAC081bf1f309aDC325306',
     },
